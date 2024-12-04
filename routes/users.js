@@ -14,7 +14,7 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
     try {
-        const user = await dbQuery("SELECT * FROM users WHERE id = ?;", [req.params.id]);
+        const [user] = await dbQuery("SELECT * FROM users WHERE id = ?;", [req.params.id]);
         if (!user) return res.status(404).json({ message: "User not found" });
         res.status(200).json(user);
     } catch (err) {
@@ -24,7 +24,7 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
     try {
-        const result = await dbRun("INSERT INTO users (name, email) VALUES (?, ?);", [req.body.name, req.body.email]);
+        const result = await dbRun("INSERT INTO users (firstName,lastName, email,phoneNumber) VALUES (?,?, ?, ?);", [req.body.firstName,req.body.lastName, req.body.email, req.body.phoneNumber]);
         res.status(201).json({ id: result.lastID, ...req.body });
     } catch (err) {
         next(err);
@@ -33,10 +33,11 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
     try {
-        const user = await dbQuery("SELECT * FROM users WHERE id = ?;", [req.params.id]);
+        const [user] = await dbQuery("SELECT * FROM users WHERE id = ?;", [req.params.id]);
         if (!user) return res.status(404).json({ message: "User not found" });
 
-        await dbRun("UPDATE users SET name = ?, email = ? WHERE id = ?;", [req.body.name, req.body.email, req.params.id]);
+        await dbRun("UPDATE users SET firstName = ?,lastName = ?, email = ?,phoneNumber=? WHERE id = ?;", 
+            [req.body.firstName ||user.firstName,req.body.lastName ||user.lastName, req.body.email||user.email, req.body.phoneNumber||user.phoneNumber, req.params.id]);
         res.status(200).json({ id: req.params.id, ...req.body });
     } catch (err) {
         next(err);
@@ -54,5 +55,6 @@ router.delete("/:id", async (req, res, next) => {
         next(err);
     }
 });
+
 
 export default router;
