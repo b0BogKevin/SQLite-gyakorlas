@@ -30,16 +30,16 @@
               "type": "object",
               "properties": {
                 "firstName": {
-                  "example": "any"
+                  "example": "John"
                 },
                 "lastName": {
-                  "example": "any"
+                  "example": "Smith"
                 },
                 "email": {
-                  "example": "any"
+                  "example": "johnsmith@example.com"
                 },
                 "phoneNumber": {
-                  "example": "any"
+                  "example": "+36205346542"
                 }
               }
             }
@@ -88,16 +88,16 @@
               "type": "object",
               "properties": {
                 "firstName": {
-                  "example": "any"
+                  "example": "John"
                 },
                 "lastName": {
-                  "example": "any"
+                  "example": "Smith"
                 },
                 "email": {
-                  "example": "any"
+                  "example": "johnsmith@example.com"
                 },
                 "phoneNumber": {
-                  "example": "any"
+                  "example": "+36205346542"
                 }
               }
             }
