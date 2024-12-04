@@ -2,10 +2,13 @@ import express from "express";
 import cors from "cors";
 import { initializeDB } from "./database.js";
 import usersRouter from "./routes/users.js";
-import SwaggerUI from "swagger-ui";
+import swaggerUi from 'swagger-ui-express';
+import { readFile } from "fs/promises";
+const swaggerDocument = JSON.parse(await readFile(new URL("./swaggerDocument.json", import.meta.url)));
 
-//app.use('/users/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 const app = express();
+app.use("/api/users/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 
 app.use(cors());
